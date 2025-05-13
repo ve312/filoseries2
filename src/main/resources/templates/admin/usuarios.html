@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+  <title th:text="#{admin.usuarios.titulo}">Administración de Usuarios</title>
+</head>
+<body>
+<section class="container my-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-4" th:text="#{admin.usuarios.encabezado}">Administración de Usuarios</h1>
+      <p class="lead" th:text="#{admin.usuarios.descripcion}">Gestiona los usuarios del sistema y sus estados.</p>
+    </div>
+  </div>
+
+  <!-- Mensaje de alerta -->
+  <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <span th:text="${mensaje}">Mensaje de éxito</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Tabla de usuarios -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0" th:text="#{admin.usuarios.listado}">Listado de Usuarios</h5>
+    </div>
+    <div class="card-body">
+      <div th:if="${#lists.isEmpty(usuarios)}" class="alert alert-info">
+        <p th:text="#{admin.usuarios.vacio}">No hay usuarios registrados en el sistema.</p>
+      </div>
+
+      <div th:unless="${#lists.isEmpty(usuarios)}" class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th th:text="#{admin.usuarios.tabla.id}">ID</th>
+            <th th:text="#{admin.usuarios.tabla.usuario}">Usuario</th>
+            <th th:text="#{admin.usuarios.tabla.email}">Email</th>
+            <th th:text="#{admin.usuarios.tabla.rol}">Rol</th>
+            <th th:text="#{admin.usuarios.tabla.fechaCreacion}">Fecha Registro</th>
+            <th th:text="#{admin.usuarios.tabla.estado}">Estado</th>
+            <th th:text="#{admin.usuarios.tabla.acciones}">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.id}">1</td>
+            <td th:text="${usuario.username}">usuario123</td>
+            <td th:text="${usuario.email}">correo@ejemplo.com</td>
+            <td>
+              <span th:if="${#strings.contains(usuario.rol, 'ADMIN')}" class="badge bg-danger" th:text="#{rol.admin}">Admin</span>
+              <span th:if="${#strings.contains(usuario.rol, 'FILOSOFO')}" class="badge bg-primary" th:text="#{rol.filosofo}">Filósofo</span>
+              <span th:if="${#strings.contains(usuario.rol, 'VISITANTE')}" class="badge bg-info" th:text="#{rol.visitante}">Visitante</span>
+            </td>
+            <td th:text="${#temporals.format(usuario.fechaCreacion, 'dd/MM/yyyy')}">01/01/2023</td>
+            <td>
+              <span th:if="${usuario.estado == 'ACTIVO'}" class="badge bg-success" th:text="#{estado.activo}">Activo</span>
+              <span th:if="${usuario.estado == 'INACTIVO'}" class="badge bg-secondary" th:text="#{estado.inactivo}">Inactivo</span>
+              <span th:if="${usuario.estado == 'SUSPENDIDO'}" class="badge bg-warning" th:text="#{estado.suspendido}">Suspendido</span>
+              <span th:if="${usuario.estado == 'BANEADO'}" class="badge bg-danger" th:text="#{estado.baneado}">Baneado</span>
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-gear"></i> <span th:text="#{admin.usuarios.acciones}">Acciones</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li th:if="${usuario.estado != 'ACTIVO'}">
+                    <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
+                      <input type="hidden" name="estado" value="ACTIVO">
+                      <button type="submit" class="dropdown-item">
+                        <i class="bi bi-check-circle text-success"></i> <span th:text="#{admin.usuarios.activar}">Activar</span>
+                      </button>
+                    </form>
+                  </li>
+                  <li th:if="${usuario.estado != 'INACTIVO'}">
+                    <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
+                      <input type="hidden" name="estado" value="INACTIVO">
+                      <button type="submit" class="dropdown-item">
+                        <i class="bi bi-circle text-secondary"></i> <span th:text="#{admin.usuarios.desactivar}">Desactivar</span>
+                      </button>
+                    </form>
+                  </li>
+                  <li th:if="${usuario.estado != 'SUSPENDIDO'}">
+                    <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
+                      <input type="hidden" name="estado" value="SUSPENDIDO">
+                      <button type="submit" class="dropdown-item">
+                        <i class="bi bi-exclamation-circle text-warning"></i> <span th:text="#{admin.usuarios.suspender}">Suspender</span>
+                      </button>
+                    </form>
+                  </li>
+                  <li th:if="${usuario.estado != 'BANEADO'}">
+                    <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
+                      <input type="hidden" name="estado" value="BANEADO">
+                      <button type="submit" class="dropdown-item">
+                        <i class="bi bi-x-circle text-danger"></i> <span th:text="#{admin.usuarios.banear}">Banear</span>
+                      </button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

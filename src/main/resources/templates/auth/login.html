@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title th:text="#{login.titulo}">Iniciar Sesión</title>
+</head>
+<body>
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0" th:text="#{login.encabezado}">Iniciar Sesión</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span th:text="${error}">Error de autenticación</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Mensaje de éxito (por ejemplo, después de cerrar sesión) -->
+                    <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span th:text="${mensaje}">Mensaje de éxito</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label" th:text="#{login.usuario}">Usuario</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control" id="username" name="username" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label" th:text="#{login.password}">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                            <label class="form-check-label" for="remember-me" th:text="#{login.recordarme}">Recordarme</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" th:text="#{login.boton}">Iniciar Sesión</button>
+                            <a th:href="@{/registro}" class="btn btn-outline-secondary" th:text="#{login.registro}">¿No tienes cuenta? Regístrate</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{login.bienvenida.titulo}">¡Bienvenido a FiloSeries!</h5>
+                    <p class="card-text" th:text="#{login.bienvenida.texto}">
+                        Inicia sesión para acceder a todos los análisis filosóficos de tus series favoritas.
+                        Podrás comentar, participar en discusiones y descubrir nuevas perspectivas filosóficas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

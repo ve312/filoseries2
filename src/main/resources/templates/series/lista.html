@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(title=#{series.list.title}, content=~{::content})}">
+<body>
+<div th:fragment="content">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 th:text="${termino != null ? #{series.search.results(${termino})} : #{series.list.title}}">Series</h1>
+        </div>
+    </div>
+
+    <!-- Búsqueda avanzada -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <i class="fas fa-search me-2"></i>
+            <span th:text="#{series.advanced.search}">Búsqueda avanzada</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/series/buscar}" method="get" class="row g-3">
+                <div class="col-md-6">
+                    <label for="termino" class="form-label" th:text="#{series.search.title}">Título</label>
+                    <input type="text" class="form-control" id="termino" name="termino" th:value="${termino}">
+                </div>
+                <div class="col-md-3">
+                    <label for="tipo" class="form-label" th:text="#{series.type}">Tipo</label>
+                    <select class="form-select" id="tipo" name="tipo">
+                        <option value="" th:text="#{series.type.all}">Todos</option>
+                        <option value="SERIE" th:text="#{series.type.series}">Serie</option>
+                        <option value="PELICULA" th:text="#{series.type.movie}">Película</option>
+                        <option value="MINISERIE" th:text="#{series.type.miniseries}">Miniserie</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100" th:text="#{series.search.button}">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="row" th:if="${not #lists.isEmpty(series)}">
+        <div class="col-md-4 mb-4" th:each="serie : ${series}">
+            <div class="card h-100 shadow">
+                <img th:src="${serie.imagenUrl}" class="card-img-top" alt="Imagen de serie"
+                     style="height: 220px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${@serieService.getTituloLocalizado(serie)}">Título de la Serie</h5>
+                    <p class="card-text small text-muted">
+                        <span th:text="${#temporals.format(serie.fecha_estreno, 'yyyy')}">2023</span> |
+                        <span th:text="${serie.tipo}" class="badge bg-secondary">Serie</span>
+                    </p>
+                    <p class="card-text text-truncate" th:text="${@serieService.getDescripcionLocalizada(serie)}">
+                        Descripción de la serie...
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted small">
+                                <i class="fas fa-film me-1"></i>
+                                <span th:text="${serie.episodios.size() + ' ' + (#lists.size(serie.episodios) == 1 ? #{series.episode} : #{series.episodes})}">
+                                    10 episodios
+                                </span>
+                            </span>
+                        <a th:href="@{'/series/' + ${serie.id}}" class="btn btn-sm btn-primary" th:text="#{series.view.details}">
+                            Ver detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje si no hay resultados -->
+    <div class="alert alert-info" th:if="${#lists.isEmpty(series)}">
+        <i class="fas fa-info-circle me-2"></i>
+        <span th:text="${termino != null ? #{series.no.results.search(${termino})} : #{series.no.results}}">
+                No se encontraron series.
+            </span>
+    </div>
+</div>
+</body>
+</html>

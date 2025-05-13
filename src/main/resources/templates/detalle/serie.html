@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: html(title=${@serieService.getTituloLocalizado(serie)}, content=~{::content})}">
+<body>
+<div th:fragment="content">
+  <!-- Header de la serie -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <img th:src="${serie.imagenUrl}" class="img-fluid rounded shadow" alt="Imagen de serie">
+    </div>
+    <div class="col-md-8">
+      <h1 th:text="${@serieService.getTituloLocalizado(serie)}">Título de la Serie</h1>
+
+      <div class="mb-3">
+        <span class="badge bg-secondary me-2" th:text="${serie.tipo}">SERIE</span>
+        <span th:text="${#temporals.format(serie.fecha_estreno, 'yyyy')}">2023</span> -
+        <span th:if="${serie.fecha_fin}" th:text="${#temporals.format(serie.fecha_fin, 'yyyy')}">2025</span>
+        <span th:unless="${serie.fecha_fin}" th:text="#{series.present}">Presente</span>
+      </div>
+
+      <p class="lead" th:text="${@serieService.getDescripcionLocalizada(serie)}">
+        Descripción detallada de la serie...
+      </p>
+
+      <div class="mb-3">
+        <strong th:text="#{series.creator}">Creador:</strong>
+        <span th:text="${serie.creador}">Nombre del creador</span>
+      </div>
+
+      <div class="mb-3">
+        <strong th:text="#{series.platform}">Plataforma:</strong>
+        <span th:text="${serie.plataforma}">Nombre de la plataforma</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegación por temporadas -->
+  <div class="card mb-4">
+    <div class="card-header bg-light">
+      <ul class="nav nav-tabs card-header-tabs" id="seasonTabs" role="tablist">
+        <li class="nav-item" th:each="temporada, tempStat : ${episodios.keySet()}">
+          <a class="nav-link" th:classappend="${tempStat.first} ? 'active'"
+             th:id="'season-tab-' + ${temporada}"
+             data-bs-toggle="tab"
+             th:href="'#season-' + ${temporada}"
+             role="tab"
+             th:aria-controls="'season-' + ${temporada}"
+             th:aria-selected="${tempStat.first}">
+            <span th:text="#{series.season}">Temporada</span> <span th:text="${temporada}">1</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content" id="seasonTabsContent">
+        <div class="tab-pane fade" th:classappend="${tempStat.first} ? 'show active'"
+             th:id="'season-' + ${temporada}"
+             role="tabpanel"
+             th:aria-labelledby="'season-tab-' + ${temporada}"
+             th:each="temporada, tempStat : ${episodios.keySet()}">
+
+          <div class="list-group">
+            <a th:each="episodio : ${episodios.get(temporada)}"
+               th:href="@{'/episodios/' + ${episodio.id}}"
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              <div>
+                <span class="badge bg-secondary me-2" th:text="${episodioStat.count}">1</span>
+                <span th:text="${@episodioService.getTituloLocalizado(episodio)}">Título del episodio</span>
+              </div>
+              <span class="badge bg-primary rounded-pill" th:if="${!episodio.analisisFilosoficos.isEmpty()}" th:text="${episodio.analisisFilosoficos.size()}">
+                                <i class="fas fa-book-open"></i>
+                            </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de análisis filosóficos relacionados con esta serie -->
+  <div class="card mb-4">
+    <div class="card-header bg-light">
+      <i class="fas fa-book-open me-2"></i>
+      <span th:text="#{series.related.analysis}">Análisis filosóficos relacionados</span>
+    </div>
+    <div class="card-body">
+      <div class="list-group" th:if="${!serie.episodios.stream().flatMap(e -> e.analisisFilosoficos.stream()).toList().isEmpty()}">
+        <a th:each="analisis : ${serie.episodios.stream().flatMap(e -> e.analisisFilosoficos.stream()).toList()}"
+           th:href="@{'/analisis/' + ${analisis.id}}"
+           class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1" th:text="${@analisisFilosoficoService.getTituloLocalizado(analisis)}">Título del análisis</h5>
+            <small th:text="${#temporals.format(analisis.fechaPublicacion, 'dd/MM/yyyy')}">01/01/2025</small>
+          </div>
+          <p class="mb-1 text-truncate" th:text="${@analisisFilosoficoService.getContenidoLocalizado(analisis)}">
+            Contenido del análisis...
+          </p>
+          <small>
+            <span th:text="${analisis.filosofo.nombre}">Nombre del filósofo</span> |
+            <span th:text="${@episodioService.getTituloLocalizado(analisis.episodio)}">Título del episodio</span>
+          </small>
+        </a>
+      </div>
+      <div class="alert alert-info" th:if="${serie.episodios.stream().flatMap(e -> e.analisisFilosoficos.stream()).toList().isEmpty()}">
+        <i class="fas fa-info-circle me-2"></i>
+        <span th:text="#{series.no.analysis}">Aún no hay análisis filosóficos para esta serie.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones para roles específicos -->
+  <div class="d-flex justify-content-end mb-4" sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{'/admin/series/editar/' + ${serie.id}}" class="btn btn-warning me-2">
+      <i class="fas fa-edit me-1"></i>
+      <span th:text="#{series.edit}">Editar serie</span>
+    </a>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarSerieModal">
+      <i class="fas fa-trash-alt me-1"></i>
+      <span th:text="#{series.delete}">Eliminar serie</span>
+    </button>
+  </div>
+
+  <!-- Modal para confirmación de eliminación -->
+  <div class="modal fade" id="eliminarSerieModal" tabindex="-1" aria-labelledby="eliminarSerieModalLabel" aria-hidden="true" sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarSerieModalLabel" th:text="#{series.confirm.delete}">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="#{series.delete.confirmation(${@serieService.getTituloLocalizado(serie)})}">
+            ¿Estás seguro de que deseas eliminar esta serie? Esta acción no se puede deshacer.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{common.cancel}">Cancelar</button>
+          <form th:action="@{'/admin/series/eliminar/' + ${serie.id}}" method="post">
+            <button type="submit" class="btn btn-danger" th:text="#{common.delete}">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
