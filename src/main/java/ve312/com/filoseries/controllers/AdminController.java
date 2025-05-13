@@ -41,11 +41,23 @@ public class AdminController {
 
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
+
+            // Validar que el estado es uno de los permitidos
+            if (!estado.equals("ACTIVO") && !estado.equals("INACTIVO") &&
+                    !estado.equals("SUSPENDIDO") && !estado.equals("BANEADO")) {
+                redirectAttributes.addFlashAttribute("error",
+                        "Estado no válido: " + estado);
+                return "redirect:/admin/usuarios";
+            }
+
             usuario.setEstado(estado);
             usuarioService.guardar(usuario);
 
             redirectAttributes.addFlashAttribute("mensaje",
                     messageUtil.getMessage("admin.usuario.estado.actualizado", usuario.getUsername(), estado));
+        } else {
+            redirectAttributes.addFlashAttribute("error",
+                    "Usuario con ID " + id + " no encontrado");
         }
 
         return "redirect:/admin/usuarios";

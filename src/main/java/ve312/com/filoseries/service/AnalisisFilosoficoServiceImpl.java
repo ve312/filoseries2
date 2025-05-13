@@ -77,18 +77,18 @@ public class AnalisisFilosoficoServiceImpl implements AnalisisFilosoficoService 
     @Override
     public String getTituloLocalizado(AnalisisFilosofico analisis) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> analisis.getTitulo_en();
-            case "de" -> analisis.getTitulo_de();
-            default -> analisis.getTitulo_es();
+            case "en" -> analisis.getTituloEn();
+            case "de" -> analisis.getTituloDe();
+            default -> analisis.getTituloEs();
         };
     }
 
     @Override
     public String getContenidoLocalizado(AnalisisFilosofico analisis) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> analisis.getContenido_en();
-            case "de" -> analisis.getContenido_de();
-            default -> analisis.getContenido_es();
+            case "en" -> analisis.getContenidoEn();
+            case "de" -> analisis.getContenidoDe();
+            default -> analisis.getContenidoEs();
         };
     }
 }

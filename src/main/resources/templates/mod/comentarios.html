@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}"
+>
 <head>
-    <title th:text="#{mod.comentarios.titulo}">Moderación de Comentarios</title>
+    <meta charset="UTF-8">
+    <title>Moderación de Comentarios</title>
 </head>
 <body>
+<div th:fragment="content">
 <section class="container my-5">
     <div class="row mb-4">
         <div class="col">
@@ -87,5 +91,6 @@
         </div>
     </div>
 </section>
+</div>
 </body>
 </html>

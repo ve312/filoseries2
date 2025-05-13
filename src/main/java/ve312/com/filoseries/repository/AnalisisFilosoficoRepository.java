@@ -16,6 +16,6 @@ public interface AnalisisFilosoficoRepository extends JpaRepository<AnalisisFilo
     List<AnalisisFilosofico> findByCategoria(CategoriaFilosofica categoria);
     List<AnalisisFilosofico> findByTituloEsContainingIgnoreCase(String titulo);
     List<AnalisisFilosofico> findByTituloEnContainingIgnoreCase(String titulo);
-    List<AnalisisFilosofico> findByTituloDEContainingIgnoreCase(String titulo);
+    List<AnalisisFilosofico> findByTituloDeContainingIgnoreCase(String titulo);
     List<AnalisisFilosofico> findTop10ByOrderByFechaPublicacionDesc();
 }

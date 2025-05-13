@@ -10,5 +10,5 @@ import java.util.List;
 public interface CategoriaFilosoficaRepository extends JpaRepository<CategoriaFilosofica, Long> {
     List<CategoriaFilosofica> findByNombreEsContainingIgnoreCase(String nombre);
     List<CategoriaFilosofica> findByNombreEnContainingIgnoreCase(String nombre);
-    List<CategoriaFilosofica> findByNombreDEContainingIgnoreCase(String nombre);
+    List<CategoriaFilosofica> findByNombreDeContainingIgnoreCase(String nombre);
 }

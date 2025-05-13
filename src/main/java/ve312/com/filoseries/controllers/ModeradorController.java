@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/mod")
-@PreAuthorize("hasAnyRole('ROLE_FILOSOFO', 'ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_MOD', 'ROLE_ADMIN')")
 public class ModeradorController {
     private final ComentarioService comentarioService;
     private final MessageUtil messageUtil;

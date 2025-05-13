@@ -10,5 +10,5 @@ import java.util.List;
 public interface SerieRepository extends JpaRepository<Serie, Long> {
     List<Serie> findByTituloEsContainingIgnoreCase(String titulo);
     List<Serie> findByTituloEnContainingIgnoreCase(String titulo);
-    List<Serie> findByTituloDEContainingIgnoreCase(String titulo);
+    List<Serie> findByTituloDeContainingIgnoreCase(String titulo);
 }

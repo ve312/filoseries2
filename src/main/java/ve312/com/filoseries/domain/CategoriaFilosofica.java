@@ -21,15 +21,15 @@ public class CategoriaFilosofica implements Serializable {
 
     @NotEmpty
     @Column(name = "cat_nombre_es")
-    private String nombre_es;
+    private String nombreEs;
 
     @NotEmpty
     @Column(name = "cat_nombre_en")
-    private String nombre_en;
+    private String nombreEn;
 
     @NotEmpty
     @Column(name = "cat_nombre_de")
-    private String nombre_de;
+    private String nombreDe;
 
     @OneToMany(mappedBy = "categoria" , cascade = CascadeType.ALL)
     private List<AnalisisFilosofico> analisis;

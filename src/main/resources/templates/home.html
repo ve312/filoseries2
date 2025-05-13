@@ -1,10 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Home</title>
 </head>
 <body>
-$END$
+<div th:fragment="content">
+  <!-- Header con imagen destacada -->
+  <div class="jumbotron bg-dark text-white p-5 mb-4 rounded">
+    <div class="container py-5">
+      <h1 class="display-4" th:text="#{home.welcome}">Bienvenido a FiloSeries</h1>
+      <p class="lead" th:text="#{home.slogan}">Explorando la filosofía a través de tus series favoritas</p>
+      <hr class="my-4">
+      <p th:text="#{home.description}">Descubre análisis filosóficos profundos de escenas y personajes que te harán ver tus series desde una nueva perspectiva.</p>
+      <a class="btn btn-primary btn-lg" th:href="@{/series}" role="button" th:text="#{home.explore}">Explorar series</a>
+    </div>
+  </div>
+    th:if
+  <!-- Sección: Series destacadas -->
+  <section class="mb-5">
+    <h2 class="text-center mb-4" th:text="#{home.featured.series}">Series destacadas</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" th:each="serie, seriesStat : ${series}" th:if="${seriesStat.index < 3}">
+        <div class="card h-100 shadow">
+          <img th:src="${serie.imagenUrl}" class="card-img-top" alt="Imagen de serie"
+               style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${serieSer.getTituloLocalizado(serie)}">Título de la Serie</h5>
+            <p class="card-text text-truncate" th:text="${serieSer.getDescripcionLocalizada(serie)}">
+              Descripción de la serie...
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-top-0">
+            <a th:href="@{'/series/' + ${serie.id}}" class="btn btn-sm btn-primary" th:text="#{home.view.details}">Ver detalles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <a th:href="@{/series}" class="btn btn-outline-primary" th:text="#{home.view.all.series}">Ver todas las series</a>
+    </div>
+  </section>
+
+  <!-- Sección: Últimos análisis -->
+  <section class="mb-5">
+    <h2 class="text-center mb-4" th:text="#{home.latest.analysis}">Últimos análisis filosóficos</h2>
+    <div class="row">
+      <div class="col-md-6 mb-4" th:each="analisis : ${ultimosAnalisis}">
+        <div class="card h-100 shadow">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${analisisSer.getTituloLocalizado(analisis)}">
+              Título del análisis
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <span th:text="${analisis.filosofo.nombre}">Filósofo</span> |
+              <span th:text="${#temporals.format(analisis.fechaPublicacion, 'dd/MM/yyyy')}">Fecha</span>
+            </h6>
+            <p class="card-text text-truncate" th:text="${analisisSer.getContenidoLocalizado(analisis)}">
+              Contenido del análisis...
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <a th:href="@{'/analisis/' + ${analisis.id}}" class="btn btn-sm btn-primary" th:text="#{home.read.more}">Leer más</a>
+              <span class="badge bg-secondary">
+                                    <i class="fas fa-comment me-1"></i>
+                                    <span th:text="${analisis.comentarios.size()}">0</span>
+                                </span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <small class="text-muted">
+              <span th:text="#{home.episode}">Episodio</span>:
+              <a th:href="@{'/episodios/' + ${analisis.episodio.id}}" th:text="${episodioSer.getTituloLocalizado(analisis.episodio)}">
+                Título del episodio
+              </a>
+              (<a th:href="@{'/series/' + ${analisis.episodio.serie.id}}" th:text="${serieSer.getTituloLocalizado(analisis.episodio.serie)}">
+              Título de la serie
+            </a>)
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Categorías filosóficas -->
+  <section class="mb-5">
+    <h2 class="text-center mb-4" th:text="#{home.categories}">Categorías filosóficas</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+          <a href="#" class="btn btn-outline-dark mb-2" th:each="categoria : ${categorias}"
+             th:text="${categoriaSer.getNombreLocalizado(categoria)}">
+            Nombre de categoría
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA para registro -->
+  <section class="bg-light p-5 rounded mb-5" sec:authorize="!isAuthenticated()">
+    <div class="container text-center">
+      <h3 th:text="#{home.join.community}">Únete a nuestra comunidad</h3>
+      <p class="lead" th:text="#{home.register.benefits}">Regístrate para comentar en los análisis y participar en discusiones filosóficas</p>
+      <a th:href="@{/registro}" class="btn btn-primary" th:text="#{home.register.now}">Registrarme ahora</a>
+    </div>
+  </section>
+</div>
 </body>
 </html>

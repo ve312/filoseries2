@@ -1,5 +1,6 @@
 package ve312.com.filoseries.service;
 
+import org.springframework.stereotype.Service;
 import ve312.com.filoseries.domain.AnalisisFilosofico;
 import ve312.com.filoseries.domain.CategoriaFilosofica;
 import ve312.com.filoseries.domain.Episodio;
@@ -7,6 +8,7 @@ import ve312.com.filoseries.domain.Filosofo;
 
 import java.util.List;
 import java.util.Optional;
+
 
 public interface AnalisisFilosoficoService {
 

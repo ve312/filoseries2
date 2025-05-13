@@ -37,11 +37,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     return new UsernameNotFoundException("Usuario " + username + " no encontrado");
                 });
 
+        // Check if user is ACTIVO
+        if (!"ACTIVO".equals(usuario.getEstado())) {
+            log.error("Error en el login: usuario '{}' no está activo. Estado actual: {}",
+                    username, usuario.getEstado());
+            throw new UsernameNotFoundException("Usuario " + username + " no está activo. Estado: " + usuario.getEstado());
+        }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         for (Rol rol : usuario.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(rol.getNombre()));
-            log.info("Rol: {}", rol.getNombre());
+            // Asegurar que el nombre del rol incluye el prefijo ROLE_
+            String roleName = rol.getNombre();
+            if (!roleName.startsWith("ROLE_")) {
+                roleName = "ROLE_" + roleName;
+            }
+
+            authorities.add(new SimpleGrantedAuthority(roleName));
+            log.info("Rol asignado a {}: {}", username, roleName);
         }
 
         if (authorities.isEmpty()) {
@@ -52,6 +65,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new User(
                 usuario.getUsername(),
                 usuario.getPassword(),
+                true,  // enabled
+                true,  // accountNonExpired
+                true,  // credentialsNonExpired
+                true,  // accountNonLocked
                 authorities
         );
     }

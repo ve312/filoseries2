@@ -32,13 +32,12 @@ public class AuthController {
         this.messageUtil = messageUtil;
     }
 
-
     @GetMapping("/login")
     public String mostrarFormularioLogin(@RequestParam(value = "error", required = false) String error,
                                          @RequestParam(value = "logout", required = false) String logout,
                                          Model model) {
         if (error != null) {
-            model.addAttribute("error", messageUtil.getMessage("login.error"));
+            model.addAttribute("error", messageUtil.getMessage("login.error.credenciales"));
         }
 
         if (logout != null) {
@@ -60,32 +59,30 @@ public class AuthController {
                                    RedirectAttributes redirectAttributes) {
         // Validar si el usuario ya existe
         if (usuarioService.existeUsername(usuario.getUsername())) {
-            result.rejectValue("username", "error.username", messageUtil.getMessage("registro.error.username.existente"));
+            result.rejectValue("username", "error.username", "El nombre de usuario ya está en uso");
         }
 
         // Validar si el email ya existe
         if (usuarioService.existeEmail(usuario.getEmail())) {
-            result.rejectValue("email", "error.email", messageUtil.getMessage("registro.error.email.existente"));
+            result.rejectValue("email", "error.email", "El email ya está registrado");
         }
 
+        // Si hay errores de validación, volver al formulario
         if (result.hasErrors()) {
             return "auth/registro";
         }
 
-        usuarioService.guardar(usuario);
+        try {
+            // Guardar usuario
+            usuarioService.guardar(usuario);
 
-        // Autenticamos al usuario después del registro
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        usuario.getUsername(),
-                        usuario.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        redirectAttributes.addFlashAttribute("mensaje", messageUtil.getMessage("registro.exito"));
-        return "redirect:/";
+            redirectAttributes.addFlashAttribute("mensaje", "Registro exitoso");
+            return "redirect:/";
+        } catch (Exception e) {
+            // Manejar cualquier error de registro
+            result.reject("error.registro", "Error al registrar el usuario");
+            return "auth/registro";
+        }
     }
 
     @GetMapping("/acceso-denegado")

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}">
 <head>
-    <title th:text="#{login.titulo}">Iniciar Sesión</title>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
 </head>
 <body>
+<div th:fragment="content">
 <section class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -14,7 +16,7 @@
                 <div class="card-body">
                     <!-- Mensaje de error -->
                     <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <span th:text="${error}">Error de autenticación</span>
+                        <span th:text="${error}">Credenciales inválidas o usuario inactivo</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -67,5 +69,6 @@
         </div>
     </div>
 </section>
+</div>
 </body>
 </html>

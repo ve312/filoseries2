@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,18 +27,6 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
-
-    /*
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
-    }
-    */
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -48,31 +38,50 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+        failureHandler.setDefaultFailureUrl("/login?error=true");
+        return failureHandler;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
-                        .requestMatchers("/", "/index", "/home", "/registro", "/series/listar").permitAll()
+                        .requestMatchers("/", "/series", "/series/**", "/episodios/**", "/analisis/**").hasAnyRole("MOD", "ADMIN", "USER")
+                        .requestMatchers("/login", "/registro", "/css/**", "/js/**", "/images/**", "/webjars/**", "/cambiar-idioma").permitAll()
+                        .requestMatchers("/mod/**").hasAnyRole("ADMIN", "MOD")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/filosofo/**").hasAnyRole("ADMIN", "MODERADOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
-                        /*.failureUrl("/login?error=true")*/
+                        .defaultSuccessUrl("/", true)
+                        .failureHandler(authenticationFailureHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
-                        /*.invalidateHttpSession(true)
+                        .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .permitAll()*/
+                        .permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/errores/403")
+                        .accessDeniedPage("/acceso-denegado")
                 );
         return http.build();
     }
+
+    /*
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+    }
+     */
+
 }

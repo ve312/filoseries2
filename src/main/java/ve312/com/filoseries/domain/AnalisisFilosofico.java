@@ -22,27 +22,27 @@ public class AnalisisFilosofico implements Serializable {
 
     @NotEmpty
     @Column(name = "ana_contenido_es")
-    private String contenido_es;
+    private String contenidoEs;
 
     @NotEmpty
     @Column(name = "ana_contenido_en")
-    private String contenido_en;
+    private String contenidoEn;
 
     @NotEmpty
     @Column(name = "ana_contenido_de")
-    private String contenido_de;
+    private String contenidoDe;
 
     @NotEmpty
     @Column(name = "ana_titulo_es")
-    private String titulo_es;
+    private String tituloEs;
 
     @NotEmpty
     @Column(name = "ana_titulo_en")
-    private String titulo_en;
+    private String tituloEn;
 
     @NotEmpty
     @Column(name = "ana_titulo_de")
-    private String titulo_de;
+    private String tituloDe;
 
     @NotNull
     @Column(name = "ana_fecha_publicacion")

@@ -1,9 +1,11 @@
 package ve312.com.filoseries.service;
 
+
 import ve312.com.filoseries.domain.CategoriaFilosofica;
 
 import java.util.List;
 import java.util.Optional;
+
 
 public interface CategoriaFilosoficaService {
 

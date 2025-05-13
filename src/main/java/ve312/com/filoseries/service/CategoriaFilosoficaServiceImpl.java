@@ -50,9 +50,9 @@ public class CategoriaFilosoficaServiceImpl implements CategoriaFilosoficaServic
     @Override
     public String getNombreLocalizado(CategoriaFilosofica categoria) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> categoria.getNombre_en();
-            case "de" -> categoria.getNombre_de();
-            default -> categoria.getNombre_es();
+            case "en" -> categoria.getNombreEn();
+            case "de" -> categoria.getNombreDe();
+            default -> categoria.getNombreEs();
         };
     }
 }

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: html(title=${@episodioService.getTituloLocalizado(episodio)}, content=~{::content})}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: html(title=${episodioSer.getTituloLocalizado(episodio)}, content=~{::content})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Episodio</title>
+</head>
 <body>
 <div th:fragment="content">
     <!-- Header del episodio -->
@@ -7,10 +12,10 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/templates/series}" th:text="#{nav.series}">Series</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{'/series/' + ${serie.id}}" th:text="${@serieService.getTituloLocalizado(serie)}">Nombre de la serie</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/series}" th:text="#{nav.series}">Series</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{'/series/' + ${serie.id}}" th:text="${serieSer.getTituloLocalizado(serie)}">Nombre de la serie</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.temporada}">1</span>,
+                        <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.numeroTemporada}">1</span>,
                         <span th:text="#{series.episode}">Episodio</span> <span th:text="${episodio.numeroEpisodio}">1</span>
                     </li>
                 </ol>
@@ -24,29 +29,18 @@
                  class="img-fluid rounded shadow" alt="Imagen del episodio">
         </div>
         <div class="col-md-8">
-            <h1 th:text="${@episodioService.getTituloLocalizado(episodio)}">Título del Episodio</h1>
+            <h1 th:text="${episodioSer.getTituloLocalizado(episodio)}">Título del Episodio</h1>
 
             <div class="mb-3">
                 <span class="badge bg-secondary me-2">
-                    <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.temporada}">1</span>,
+                    <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.numeroTemporada}">1</span>,
                     <span th:text="#{series.episode}">Episodio</span> <span th:text="${episodio.numeroEpisodio}">1</span>
                 </span>
-                <span th:text="${#temporals.format(episodio.fechaEmision, 'dd/MM/yyyy')}">01/01/2023</span>
             </div>
 
-            <p class="lead" th:text="${@episodioService.getDescripcionLocalizada(episodio)}">
+            <p class="lead" th:text="${episodioSer.getDescripcionLocalizada(episodio)}">
                 Descripción detallada del episodio...
             </p>
-
-            <div class="mb-3">
-                <strong th:text="#{episodes.duration}">Duración:</strong>
-                <span th:text="${episodio.duracion + ' ' + #{common.minutes}}">45 minutos</span>
-            </div>
-
-            <div class="mb-3">
-                <strong th:text="#{episodes.director}">Director:</strong>
-                <span th:text="${episodio.director}">Nombre del director</span>
-            </div>
         </div>
     </div>
 
@@ -61,14 +55,14 @@
                 <div class="col-md-6 mb-4" th:each="item : ${analisis}">
                     <div class="card h-100 shadow">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${@analisisFilosoficoService.getTituloLocalizado(item)}">
+                            <h5 class="card-title" th:text="${analisisSer.getTituloLocalizado(item)}">
                                 Título del análisis
                             </h5>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 <span th:text="${item.filosofo.nombre}">Filósofo</span> |
                                 <span th:text="${#temporals.format(item.fechaPublicacion, 'dd/MM/yyyy')}">Fecha</span>
                             </h6>
-                            <p class="card-text text-truncate" th:text="${@analisisFilosoficoService.getContenidoLocalizado(item)}">
+                            <p class="card-text text-truncate" th:text="${analisisSer.getContenidoLocalizado(item)}">
                                 Contenido del análisis...
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
@@ -100,26 +94,26 @@
 
     <!-- Enlaces a episodios anterior/siguiente -->
     <div class="d-flex justify-content-between mb-4">
-        <a th:if="${episodio.numeroEpisodio > 1}"
-           th:href="@{'/episodios/' + ${serie.episodios.stream().filter(e -> e.temporada == episodio.temporada && e.numeroEpisodio == episodio.numeroEpisodio - 1).findFirst().orElse(episodio).id}}"
+        <a th:if="${tieneEpisodioAnterior}"
+           th:href="@{'/episodios/' + ${episodioAnterior.id}}"
            class="btn btn-outline-primary">
             <i class="fas fa-arrow-left me-1"></i>
             <span th:text="#{episodes.previous}">Episodio anterior</span>
         </a>
-        <span th:unless="${episodio.numeroEpisodio > 1}"></span>
+        <span th:unless="${tieneEpisodioAnterior}"></span>
 
         <a th:href="@{'/series/' + ${serie.id}}" class="btn btn-outline-secondary">
             <i class="fas fa-list me-1"></i>
             <span th:text="#{episodes.all}">Todos los episodios</span>
         </a>
 
-        <a th:if="${serie.episodios.stream().anyMatch(e -> e.temporada == episodio.temporada && e.numeroEpisodio == episodio.numeroEpisodio + 1)}"
-           th:href="@{'/episodios/' + ${serie.episodios.stream().filter(e -> e.temporada == episodio.temporada && e.numeroEpisodio == episodio.numeroEpisodio + 1).findFirst().orElse(episodio).id}}"
+        <a th:if="${tieneEpisodioSiguiente}"
+           th:href="@{'/episodios/' + ${episodioSiguiente.id}}"
            class="btn btn-outline-primary">
             <span th:text="#{episodes.next}">Episodio siguiente</span>
             <i class="fas fa-arrow-right ms-1"></i>
         </a>
-        <span th:unless="${serie.episodios.stream().anyMatch(e -> e.temporada == episodio.temporada && e.numeroEpisodio == episodio.numeroEpisodio + 1)}"></span>
+        <span th:unless="${tieneEpisodioSiguiente}"></span>
     </div>
 </div>
 </body>

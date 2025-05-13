@@ -56,7 +56,7 @@ public class SerieServiceImpl implements SerieService {
 
         return switch (language) {
             case "en" -> serieRepository.findByTituloEnContainingIgnoreCase(titulo);
-            case "de" -> serieRepository.findByTituloDEContainingIgnoreCase(titulo);
+            case "de" -> serieRepository.findByTituloDeContainingIgnoreCase(titulo);
             default -> serieRepository.findByTituloEsContainingIgnoreCase(titulo);
         };
     }
@@ -64,18 +64,18 @@ public class SerieServiceImpl implements SerieService {
     @Override
     public String getTituloLocalizado(Serie serie) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> serie.getTitulo_en();
-            case "de" -> serie.getTitulo_de();
-            default -> serie.getTitulo_es();
+            case "en" -> serie.getTituloEn();
+            case "de" -> serie.getTituloDe();
+            default -> serie.getTituloEs();
         };
     }
 
     @Override
     public String getDescripcionLocalizada(Serie serie) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> serie.getDescripcion_en();
-            case "de" -> serie.getDescripcion_de();
-            default -> serie.getDescripcion_es();
+            case "en" -> serie.getDescripcionEn();
+            case "de" -> serie.getDescripcionDe();
+            default -> serie.getDescripcionEs();
         };
     }
 }

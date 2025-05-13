@@ -31,6 +31,10 @@ public class Comentario  implements Serializable {
     @Column(name = "com_estado")
     private String estado;
 
+    @Version
+    @Column(name = "com_version")
+    private Integer version;
+
     @ManyToOne
     @JoinColumn(name = "usu_id")
     private Usuario usuario;

@@ -3,6 +3,7 @@ package ve312.com.filoseries.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,18 +26,21 @@ public class Usuario implements Serializable {
     private String username;
 
     @NotEmpty
+    @Column(name = "usu_nombre_completo")
+    private String nombre;
+
+    @NotEmpty
     @Column(name = "usu_email")
     private String email;
 
     @NotEmpty
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Column(name = "usu_password")
     private String password;
 
-    @NotNull
     @Column(name = "usu_fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    @NotEmpty
     @Column(name = "usu_estado")
     private String estado;
 

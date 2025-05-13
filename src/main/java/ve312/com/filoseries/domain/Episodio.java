@@ -22,37 +22,37 @@ public class Episodio implements Serializable {
 
     @NotEmpty
     @Column(name = "epi_titulo_es")
-    private String titulo_es;
+    private String tituloEs;
 
     @NotEmpty
     @Column(name = "epi_titulo_en")
-    private String titulo_en;
+    private String tituloEn;
 
     @NotEmpty
     @Column(name = "epi_titulo_de")
-    private String titulo_de;
+    private String tituloDe;
 
     @NotEmpty
     @Column(name = "epi_descripcion_es")
-    private String descripcion_es;
+    private String descripcionEs;
 
     @NotEmpty
     @Column(name = "epi_descripcion_en")
-    private String descripcion_en;
+    private String descripcionEn;
 
     @NotEmpty
     @Column(name = "epi_descripcion_de")
-    private String descripcion_de;
+    private String descripcionDe;
 
     @NotNull
     @Min(1)
     @Column(name = "epi_numero_episodio")
-    private int numero_episodio;
+    private int numeroEpisodio;
 
     @NotNull
     @Min(1)
     @Column(name = "epi_temporada")
-    private int numero_temporada;
+    private int numeroTemporada;
 
     @NotEmpty
     @Column(name = "epi_imagen_url")

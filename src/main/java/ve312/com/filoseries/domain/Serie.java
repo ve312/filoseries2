@@ -23,27 +23,27 @@ public class Serie implements Serializable {
 
     @NotEmpty
     @Column(name="ser_titulo_es")
-    private String titulo_es;
+    private String tituloEs;
 
     @NotEmpty
     @Column(name="ser_titulo_en")
-    private String titulo_en;
+    private String tituloEn;
 
     @NotEmpty
     @Column(name="ser_titulo_de")
-    private String titulo_de;
+    private String tituloDe;
 
     @NotEmpty
     @Column(name="ser_descripcion_es")
-    private String descripcion_es;
+    private String descripcionEs;
 
     @NotEmpty
     @Column(name="ser_descripcion_en")
-    private String descripcion_en;
+    private String descripcionEn;
 
     @NotEmpty
     @Column(name="ser_descripcion_de")
-    private String descripcion_de;
+    private String descripcionDe;
 
     @NotEmpty
     @Column(name="ser_imagen_url")

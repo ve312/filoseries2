@@ -62,18 +62,18 @@ public class EpisodioServiceImpl implements EpisodioService {
     @Override
     public String getTituloLocalizado(Episodio episodio) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> episodio.getTitulo_en();
-            case "de" -> episodio.getTitulo_de();
-            default -> episodio.getTitulo_es();
+            case "en" -> episodio.getTituloEn();
+            case "de" -> episodio.getTituloDe();
+            default -> episodio.getTituloEs();
         };
     }
 
     @Override
     public String getDescripcionLocalizada(Episodio episodio) {
         return switch (localizationUtil.getCurrentLanguage()) {
-            case "en" -> episodio.getDescripcion_en();
-            case "de" -> episodio.getDescripcion_de();
-            default -> episodio.getDescripcion_es();
+            case "en" -> episodio.getDescripcionEn();
+            case "de" -> episodio.getDescripcionDe();
+            default -> episodio.getDescripcionEs();
         };
     }
 }

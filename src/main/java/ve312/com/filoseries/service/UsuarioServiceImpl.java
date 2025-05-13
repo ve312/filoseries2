@@ -52,17 +52,29 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public Usuario guardar(Usuario usuario) {
-
+        // Encrypt password
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         var passwordEnc = encoder.encode(usuario.getPassword());
         usuario.setPassword(passwordEnc);
 
+        // Set registration date
         usuario.setFechaRegistro(LocalDateTime.now());
 
+        // Set default state to ACTIVO
         usuario.setEstado("ACTIVO");
 
+        // Ensure USER role is assigned
         List<Rol> roles = new ArrayList<>();
-        roles.add(rolService.buscarPorNombre("ROLE_USER").orElse(null));
+        Optional<Rol> userRole = rolService.buscarPorNombre("ROLE_USER");
+
+        if (userRole.isEmpty()) {
+            // If ROLE_USER doesn't exist, create it
+            Rol newUserRole = new Rol();
+            newUserRole.setNombre("ROLE_USER");
+            userRole = Optional.of(rolService.guardar(newUserRole));
+        }
+
+        roles.add(userRole.get());
         usuario.setRoles(roles);
 
         return usuarioRepository.save(usuario);
