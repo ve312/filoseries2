@@ -1,5 +1,9 @@
 package ve312.com.filoseries.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ve312.com.filoseries.domain.AnalisisFilosofico;
 import ve312.com.filoseries.domain.Comentario;
 import ve312.com.filoseries.domain.Usuario;
@@ -21,6 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/analisis")
+@Tag(name = "Análisis Filosófico", description = "Controlador para la gestión de análisis filosóficos y sus comentarios")
 public class AnalisisFilosoficoController {
 
     private final AnalisisFilosoficoService analisisService;
@@ -28,27 +32,28 @@ public class AnalisisFilosoficoController {
     private final UsuarioService usuarioService;
     private final SerieService serieService;
     private final EpisodioService episodioService;
-    private final CategoriaFilosoficaService categoriaFilosoficaService;
-    private final MessageUtil messageUtil;
 
     @Autowired
     public AnalisisFilosoficoController(AnalisisFilosoficoService analisisService,
                                         ComentarioService comentarioService,
                                         UsuarioService usuarioService,
                                         SerieService serieService,
-                                        EpisodioService episodioService,
-                                        CategoriaFilosoficaService categoriaFilosoficaService,
-                                        MessageUtil messageUtil) {
+                                        EpisodioService episodioService
+                                        ) {
         this.analisisService = analisisService;
         this.comentarioService = comentarioService;
         this.usuarioService = usuarioService;
         this.serieService = serieService;
         this.episodioService = episodioService;
-        this.categoriaFilosoficaService = categoriaFilosoficaService;
-        this.messageUtil = messageUtil;
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Ver detalle de un análisis filosófico",
+            description = "Muestra la página de detalle de un análisis filosófico con sus comentarios aprobados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Análisis encontrado y mostrado correctamente"),
+            @ApiResponse(responseCode = "302", description = "Análisis no encontrado, redirige a la página de series")
+    })
     public String verDetalleAnalisis(@PathVariable Long id, Model model,
                                      @AuthenticationPrincipal UserDetails userDetails) {
         Optional<AnalisisFilosofico> analisisOpt = analisisService.buscarPorId(id);
@@ -71,6 +76,7 @@ public class AnalisisFilosoficoController {
             model.addAttribute("serieSer", serieService);
             model.addAttribute("episodioSer", episodioService);
 
+            /*
             // Si el usuario está autenticado, obtener información adicional
             if (userDetails != null) {
                 Optional<Usuario> usuarioOpt = usuarioService.buscarPorUsername(userDetails.getUsername());
@@ -108,6 +114,7 @@ public class AnalisisFilosoficoController {
                     }
                 }
             }
+            */
 
             return "detalle/analisis";
         } else {
@@ -115,6 +122,7 @@ public class AnalisisFilosoficoController {
         }
     }
 
+    /*
     @PostMapping("/{id}/comentar")
     public String agregarComentario(@PathVariable Long id,
                                     @ModelAttribute("nuevoComentario") Comentario comentario,
@@ -172,5 +180,6 @@ public class AnalisisFilosoficoController {
 
         return "redirect:/analisis/" + analisisId + "?estadoActualizado=true";
     }
+     */
 
 }

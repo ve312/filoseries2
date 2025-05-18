@@ -1,5 +1,9 @@
 package ve312.com.filoseries.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +15,7 @@ import ve312.com.filoseries.service.EpisodioService;
 import ve312.com.filoseries.service.SerieService;
 
 @Controller
+@Tag(name = "Home", description = "Controlador para la página principal y funcionalidades generales")
 public class HomeController {
     private final SerieService serieService;
     private final AnalisisFilosoficoService analisisService;
@@ -26,6 +31,11 @@ public class HomeController {
     }
 
     @GetMapping("/")
+    @Operation(summary = "Página principal",
+            description = "Muestra la página principal con series destacadas, últimos análisis y categorías filosóficas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Página principal mostrada correctamente")
+    })
     public String home(Model model) {
         // Obtener series para mostrar en la página principal
         model.addAttribute("series", serieService.listarSeries());
@@ -45,6 +55,11 @@ public class HomeController {
     }
 
     @GetMapping("/cambiar-idioma")
+    @Operation(summary = "Cambiar idioma de la aplicación",
+            description = "Cambia el idioma de la aplicación y redirige a la página principal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "302", description = "Redirige a la página principal con el nuevo idioma")
+    })
     public String cambiarIdioma() {
         // El cambio de idioma lo maneja Spring automáticamente con LocaleChangeInterceptor
         return "redirect:/";

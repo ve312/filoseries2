@@ -1,0 +1,253 @@
+/* Estilos para home.html */
+
+/* Variables globales */
+:root {
+    --primary: #3a5a78;
+    --primary-dark: #2a4158;
+    --secondary: #6c757d;
+    --accent: #9b6a6c;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #2a9d8f;
+    --danger: #e63946;
+    --warning: #e9c46a;
+    --info: #457b9d;
+    --background: #f5f5f5;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: var(--background);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    font-family: 'Open Sans', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--warning) !important;
+}
+
+/* Estilos para el jumbotron */
+.jumbotron {
+    background-image: linear-gradient(rgba(33, 37, 41, 0.85), rgba(33, 37, 41, 0.95));
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.jumbotron .display-4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.jumbotron .lead {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.25rem;
+}
+
+.jumbotron hr {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.jumbotron .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.jumbotron .btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los títulos de sección */
+section h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent);
+}
+
+/* Estilos para las tarjetas */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.75rem;
+}
+
+.card-subtitle {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.card-text {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+}
+
+.card-footer {
+    padding: 1rem 1.5rem;
+    background-color: transparent;
+}
+
+.card-footer small {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Estilos para los botones */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    color: var(--light);
+}
+
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.75rem;
+}
+
+/* Estilos para la sección CTA */
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+section.bg-light {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+section.bg-light h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+section.bg-light .lead {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: var(--primary-dark) !important;
+    color: var(--light);
+}
+
+footer h5 {
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--light);
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--warning);
+    text-decoration: none;
+}
+
+/* Estilos para el breadcrumb */
+
+.breadcrumb-ite {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-ite:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.breadcrumb-ite.active {
+    color: var(--secondary);
+}
+
+
+
+
+
+
+

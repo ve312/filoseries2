@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!"ACTIVO".equals(usuario.getEstado())) {
             log.error("Error en el login: usuario '{}' no está activo. Estado actual: {}",
                     username, usuario.getEstado());
-            throw new UsernameNotFoundException("Usuario " + username + " no está activo. Estado: " + usuario.getEstado());
+            throw new InactiveUserException("Usuario " + username + " no está activo. Estado: " + usuario.getEstado());
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();

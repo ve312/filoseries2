@@ -1,0 +1,153 @@
+/* Estilos para registro.html */
+
+/* Variables globales */
+:root {
+    --primary: #3a5a78;
+    --primary-dark: #2a4158;
+    --secondary: #6c757d;
+    --accent: #9b6a6c;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #2a9d8f;
+    --danger: #e63946;
+    --warning: #e9c46a;
+    --info: #457b9d;
+    --background: #f5f5f5;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: var(--background);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    font-family: 'Open Sans', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--warning) !important;
+}
+
+/* Estilos para la tarjeta de registro */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: var(--primary) !important;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Estilos para el formulario */
+.form-label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(58, 90, 120, 0.25);
+}
+
+.form-control.is-invalid {
+    border-color: var(--danger);
+    background-image: none;
+}
+
+.invalid-feedback {
+    color: var(--danger);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 0.75rem 1rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Enlaces */
+a.text-decoration-none {
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+a.text-decoration-none:hover {
+    color: var(--primary-dark);
+    text-decoration: underline !important;
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: var(--primary-dark) !important;
+    color: var(--light);
+}
+
+footer h5 {
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--light);
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--warning);
+    text-decoration: none;
+}

@@ -54,12 +54,6 @@ public class EpisodioServiceImpl implements EpisodioService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Episodio> buscarPorSerieYTemporada(Serie serie, int temporada) {
-        return episodioRepository.findBySerieAndNumeroTemporada(serie, temporada);
-    }
-
-    @Override
     public String getTituloLocalizado(Episodio episodio) {
         return switch (localizationUtil.getCurrentLanguage()) {
             case "en" -> episodio.getTituloEn();

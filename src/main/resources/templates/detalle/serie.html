@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout :: html(title=${serieSer.getTituloLocalizado(serie)}, content=~{::content})}">
+      th:replace="~{layout :: html(title=${serieSer.getTituloLocalizado(serie)}, content=~{::content}, view='serie')}">
 <head>
   <meta charset="UTF-8">
   <title>Serie</title>
+<!--  <link rel="stylesheet" th:href="@{/css/estilosSerie.css}">-->
 </head>
 <body>
 <div th:fragment="content">
@@ -60,7 +61,7 @@
                 <span class="badge bg-secondary me-2" th:text="${episodio.numeroEpisodio}">1</span>
                 <span th:text="${episodioSer.getTituloLocalizado(episodio)}">Título del episodio</span>
               </div>
-              <span class="badge bg-primary rounded-pill" th:if="${!episodio.analisis.isEmpty()}" th:text="${episodio.analisis.size()}">
+              <span class="badge bg-secondary me-2" th:if="${!episodio.analisis.isEmpty()}" th:text="${episodio.analisis.size()}">
                 <i class="fas fa-book-open"></i>
               </span>
             </a>
@@ -98,41 +99,6 @@
       <div class="alert alert-info" th:if="${!hayAnalisis}">
         <i class="fas fa-info-circle me-2"></i>
         <span th:text="#{series.no.analysis}">Aún no hay análisis filosóficos para esta serie.</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Acciones para roles específicos -->
-  <div class="d-flex justify-content-end mb-4" sec:authorize="hasRole('ROLE_ADMIN')">
-    <a th:href="@{'/admin/series/editar/' + ${serie.id}}" class="btn btn-warning me-2">
-      <i class="fas fa-edit me-1"></i>
-      <span th:text="#{series.edit}">Editar serie</span>
-    </a>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarSerieModal">
-      <i class="fas fa-trash-alt me-1"></i>
-      <span th:text="#{series.delete}">Eliminar serie</span>
-    </button>
-  </div>
-
-  <!-- Modal para confirmación de eliminación -->
-  <div class="modal fade" id="eliminarSerieModal" tabindex="-1" aria-labelledby="eliminarSerieModalLabel" aria-hidden="true" sec:authorize="hasRole('ROLE_ADMIN')">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="eliminarSerieModalLabel" th:text="#{series.confirm.delete}">Confirmar eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p th:text="#{series.delete.confirmation(${serieSer.getTituloLocalizado(serie)})}">
-            ¿Estás seguro de que deseas eliminar esta serie? Esta acción no se puede deshacer.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{common.cancel}">Cancelar</button>
-          <form th:action="@{'/admin/series/eliminar/' + ${serie.id}}" method="post">
-            <button type="submit" class="btn btn-danger" th:text="#{common.delete}">Eliminar</button>
-          </form>
-        </div>
       </div>
     </div>
   </div>

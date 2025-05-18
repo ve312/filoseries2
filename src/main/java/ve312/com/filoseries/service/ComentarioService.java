@@ -13,7 +13,6 @@ public interface ComentarioService {
     Optional<Comentario> buscarPorId(Long id);
     Comentario guardar(Comentario comentario);
     void eliminar(Long id);
-    List<Comentario> buscarPorAnalisis(AnalisisFilosofico analisis);
     List<Comentario> buscarPorUsuario(Usuario usuario);
     List<Comentario> buscarPorAnalisisOrdenadosPorFecha(AnalisisFilosofico analisis);
 }

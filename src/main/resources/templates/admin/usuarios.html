@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}">
+      th:replace="~{layout :: html(title=#{home.title}, content=~{::content}, view='usuarios')}">
 <head>
   <meta charset="UTF-8">
   <title>Administración de Usuarios</title>
+<!--  <link rel="stylesheet" th:href="@{/css/estilosUsuarios.css}">-->
 </head>
 <body>
 <div th:fragment="content">
@@ -27,96 +28,106 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!-- Tabla de usuarios -->
-    <div class="card shadow-sm">
-      <div class="card-header bg-primary text-white">
-        <h5 class="mb-0" th:text="#{admin.usuarios.listado}">Listado de Usuarios</h5>
+    <!-- Formulario de búsqueda por ID -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <form th:action="@{/admin/usuarios}" method="get" class="d-flex">
+          <input type="number" name="buscarId" class="form-control me-2" placeholder="Buscar por ID" aria-label="Buscar por ID">
+          <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
       </div>
-      <div class="card-body">
-        <div th:if="${#lists.isEmpty(usuarios)}" class="alert alert-info">
-          <p th:text="#{admin.usuarios.vacio}">No hay usuarios registrados en el sistema.</p>
-        </div>
+      <div class="col-md-6 text-end">
+        <a th:href="@{/admin/usuarios}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-repeat"></i> Ver todos
+        </a>
+      </div>
+    </div>
 
-        <div th:unless="${#lists.isEmpty(usuarios)}" class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th th:text="#{admin.usuarios.tabla.id}">ID</th>
-              <th th:text="#{admin.usuarios.tabla.usuario}">Usuario</th>
-              <th th:text="#{admin.usuarios.tabla.email}">Email</th>
-              <th th:text="#{admin.usuarios.tabla.rol}">Rol</th>
-              <th th:text="#{admin.usuarios.tabla.fechaCreacion}">Fecha Registro</th>
-              <th th:text="#{admin.usuarios.tabla.estado}">Estado</th>
-              <th th:text="#{admin.usuarios.tabla.acciones}">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="usuario : ${usuarios}">
-              <td th:text="${usuario.id}">1</td>
-              <td th:text="${usuario.username}">usuario123</td>
-              <td th:text="${usuario.email}">correo@ejemplo.com</td>
-              <td>
-                <!-- Corregido para mostrar los roles correctamente -->
-                <span th:each="rol, iterStat : ${usuario.roles}">
-                <span th:if="${rol.nombre == 'ROLE_ADMIN'}" class="badge bg-danger" th:text="#{rol.admin}">Admin</span>
-                <span th:if="${rol.nombre == 'ROLE_MOD'}" class="badge bg-primary" th:text="#{rol.mod}">Moderador</span>
-                <span th:if="${rol.nombre == 'ROLE_USER'}" class="badge bg-info" th:text="#{rol.visitante}">Visitante</span>
-                <span th:if="${!iterStat.last}">, </span>
-              </span>
-              </td>
-              <td th:text="${#temporals.format(usuario.fechaRegistro, 'dd/MM/yyyy')}">01/01/2023</td>
-              <td>
-                <span th:if="${usuario.estado == 'ACTIVO'}" class="badge bg-success" th:text="#{estado.activo}">Activo</span>
-                <span th:if="${usuario.estado == 'INACTIVO'}" class="badge bg-secondary" th:text="#{estado.inactivo}">Inactivo</span>
-                <span th:if="${usuario.estado == 'SUSPENDIDO'}" class="badge bg-warning" th:text="#{estado.suspendido}">Suspendido</span>
-                <span th:if="${usuario.estado == 'BANEADO'}" class="badge bg-danger" th:text="#{estado.baneado}">Baneado</span>
-              </td>
-              <td>
-                <div class="dropdown">
-                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-gear"></i> <span th:text="#{admin.usuarios.acciones}">Acciones</span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li th:if="${usuario.estado != 'ACTIVO'}">
-                      <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
-                        <input type="hidden" name="estado" value="ACTIVO">
-                        <button type="submit" class="dropdown-item">
-                          <i class="bi bi-check-circle text-success"></i> <span th:text="#{admin.usuarios.activar}">Activar</span>
-                        </button>
-                      </form>
-                    </li>
-                    <li th:if="${usuario.estado != 'INACTIVO'}">
-                      <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
-                        <input type="hidden" name="estado" value="INACTIVO">
-                        <button type="submit" class="dropdown-item">
-                          <i class="bi bi-circle text-secondary"></i> <span th:text="#{admin.usuarios.desactivar}">Desactivar</span>
-                        </button>
-                      </form>
-                    </li>
-                    <li th:if="${usuario.estado != 'SUSPENDIDO'}">
-                      <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
-                        <input type="hidden" name="estado" value="SUSPENDIDO">
-                        <button type="submit" class="dropdown-item">
-                          <i class="bi bi-exclamation-circle text-warning"></i> <span th:text="#{admin.usuarios.suspender}">Suspender</span>
-                        </button>
-                      </form>
-                    </li>
-                    <li th:if="${usuario.estado != 'BANEADO'}">
-                      <form th:action="@{/admin/usuarios/{id}/cambiar-estado(id=${usuario.id})}" method="post">
-                        <input type="hidden" name="estado" value="BANEADO">
-                        <button type="submit" class="dropdown-item">
-                          <i class="bi bi-x-circle text-danger"></i> <span th:text="#{admin.usuarios.banear}">Banear</span>
-                        </button>
-                      </form>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <!-- Tabla de usuarios -->
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${usuariosPage.isEmpty()}">
+          <td colspan="6" class="text-center">No se encontraron usuarios</td>
+        </tr>
+        <tr th:each="usuario : ${usuariosPage.content}">
+          <td th:text="${usuario.id}">1</td>
+          <td th:text="${usuario.username}">usuario1</td>
+          <td th:text="${usuario.email}">usuario@ejemplo.com</td>
+          <td>
+            <span th:each="rol, iterStat : ${usuario.roles}" class="badge bg-secondary me-1" th:text="${rol.nombre}">ROL</span>
+          </td>
+          <td>
+            <span th:if="${usuario.estado == 'ACTIVO'}" class="badge bg-success">Activo</span>
+            <span th:if="${usuario.estado == 'INACTIVO'}" class="badge bg-danger">Inactivo</span>
+          </td>
+          <td>
+            <div class="btn-group btn-group-sm">
+              <!-- Botón para activar/desactivar -->
+              <form th:action="@{/admin/usuarios/{id}/toggle-estado(id=${usuario.id})}" method="post" class="me-1">
+                <button type="submit" class="btn btn-outline-warning"
+                        th:title="${usuario.estado == 'ACTIVO' ? 'Desactivar usuario' : 'Activar usuario'}"
+                        th:text="#{boton.activar}">
+                  <i class="bi" th:classappend="${usuario.estado == 'ACTIVO' ? 'bi-person-x' : 'bi-person-check'}"></i>
+                </button>
+              </form>
+
+              <!-- Botón para eliminar -->
+              <form th:action="@{/admin/usuarios/{id}/eliminar(id=${usuario.id})}" method="post"
+                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.')">
+                <button type="submit" class="btn btn-outline-danger" title="Eliminar usuario" th:text="#{boton.eliminar}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div th:if="${usuariosPage.totalPages > 1}" class="d-flex justify-content-center mt-4">
+      <nav aria-label="Navegación de páginas">
+        <ul class="pagination">
+          <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+            <a class="page-link" th:href="@{/admin/usuarios(page=0)}" aria-label="Primera">
+              <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+            <a class="page-link" th:href="@{/admin/usuarios(page=${currentPage - 1})}" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item" th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
+              th:classappend="${currentPage == i ? 'active' : ''}">
+            <a class="page-link" th:href="@{/admin/usuarios(page=${i})}" th:text="${i + 1}"></a>
+          </li>
+
+          <li class="page-item" th:classappend="${currentPage == usuariosPage.totalPages - 1 ? 'disabled' : ''}">
+            <a class="page-link" th:href="@{/admin/usuarios(page=${currentPage + 1})}" aria-label="Siguiente">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == usuariosPage.totalPages - 1 ? 'disabled' : ''}">
+            <a class="page-link" th:href="@{/admin/usuarios(page=${usuariosPage.totalPages - 1})}" aria-label="Última">
+              <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </section>
 </div>

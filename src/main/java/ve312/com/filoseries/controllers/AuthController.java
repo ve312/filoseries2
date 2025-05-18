@@ -1,11 +1,11 @@
 package ve312.com.filoseries.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,24 +20,34 @@ import ve312.com.filoseries.service.UsuarioService;
 import ve312.com.filoseries.util.MessageUtil;
 
 @Controller
+@Tag(name = "Autenticación", description = "Controlador para la gestión de autenticación y registro de usuarios")
 public class AuthController {
     private final UsuarioService usuarioService;
-    private final AuthenticationManager authenticationManager;
+    //private final AuthenticationManager authenticationManager;
     private final MessageUtil messageUtil;
 
     @Autowired
-    public AuthController(UsuarioService usuarioService, AuthenticationManager authenticationManager, MessageUtil messageUtil) {
+    public AuthController(UsuarioService usuarioService,MessageUtil messageUtil) {
         this.usuarioService = usuarioService;
-        this.authenticationManager = authenticationManager;
         this.messageUtil = messageUtil;
     }
 
     @GetMapping("/login")
+    @Operation(summary = "Mostrar formulario de login",
+            description = "Muestra la página de inicio de sesión con mensajes de error si corresponde")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Formulario de login mostrado correctamente")
+    })
     public String mostrarFormularioLogin(@RequestParam(value = "error", required = false) String error,
                                          @RequestParam(value = "logout", required = false) String logout,
                                          Model model) {
+
         if (error != null) {
-            model.addAttribute("error", messageUtil.getMessage("login.error.credenciales"));
+            if ("inactive".equals(error)) {
+                model.addAttribute("error", messageUtil.getMessage("login.error.usuario.inactivo"));
+            } else {
+                model.addAttribute("error", messageUtil.getMessage("login.error.credenciales"));
+            }
         }
 
         if (logout != null) {
@@ -47,13 +57,25 @@ public class AuthController {
         return "auth/login";
     }
 
+
     @GetMapping("/registro")
+    @Operation(summary = "Mostrar formulario de registro",
+            description = "Muestra la página de registro de nuevos usuarios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Formulario de registro mostrado correctamente")
+    })
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "auth/registro";
     }
 
     @PostMapping("/registro")
+    @Operation(summary = "Procesar registro de usuario",
+            description = "Valida y procesa el registro de un nuevo usuario en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "302", description = "Usuario registrado correctamente, redirige a la página principal"),
+            @ApiResponse(responseCode = "200", description = "Error en el registro, muestra nuevamente el formulario con errores")
+    })
     public String procesarRegistro(@Valid @ModelAttribute("usuario") Usuario usuario,
                                    BindingResult result,
                                    RedirectAttributes redirectAttributes) {
@@ -86,6 +108,11 @@ public class AuthController {
     }
 
     @GetMapping("/acceso-denegado")
+    @Operation(summary = "Mostrar página de acceso denegado",
+            description = "Muestra la página de error cuando un usuario intenta acceder a un recurso sin permisos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Página de acceso denegado mostrada correctamente")
+    })
     public String accesoDenegado() {
         return "error/acceso-denegado";
     }

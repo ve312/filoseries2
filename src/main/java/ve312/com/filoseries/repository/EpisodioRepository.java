@@ -11,5 +11,4 @@ import java.util.List;
 public interface EpisodioRepository extends JpaRepository<Episodio, Long> {
     List<Episodio> findBySerie(Serie serie);
     List<Episodio> findBySerieAndNumeroTemporada(Serie serie, int temporada);
-    List<Episodio> findBySerieOrderByNumeroTemporadaAscNumeroEpisodioAsc(Serie serie);
 }

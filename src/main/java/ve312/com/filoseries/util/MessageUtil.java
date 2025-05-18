@@ -31,7 +31,5 @@ public class MessageUtil {
      * @param args Argumentos a insertar en el mensaje
      * @return Texto localizado con parámetros
      */
-    public String getMessage(String key, Object... args) {
-        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
-    }
+
 }

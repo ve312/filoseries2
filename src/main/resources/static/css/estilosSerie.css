@@ -1,0 +1,202 @@
+/* Estilos para serie.html */
+
+/* Variables globales */
+:root {
+    --primary: #3a5a78;
+    --primary-dark: #2a4158;
+    --secondary: #6c757d;
+    --accent: #9b6a6c;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #2a9d8f;
+    --danger: #e63946;
+    --warning: #e9c46a;
+    --info: #457b9d;
+    --background: #f5f5f5;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: var(--background);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    font-family: 'Open Sans', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--warning) !important;
+}
+
+/* Estilos para la imagen de la serie */
+.img-fluid {
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos para la información de la serie */
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent);
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.75em;
+    margin-right: 0.5rem;
+}
+
+.badge-primary {
+    background-color: var(--primary);
+}
+
+/* Estilos para la descripción de la serie */
+.serie-description {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    line-height: 1.8;
+    margin: 2rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+}
+
+/* Estilos para las pestañas */
+.nav-tabs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs .nav-link {
+    color: var(--secondary);
+    border: none;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary) !important;
+    border-color: transparent;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-dark) !important;
+    background-color: transparent;
+    border-bottom: 3px solid var(--primary);
+}
+
+/* Estilos para las tarjetas de temporadas */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--primary);
+    color: var(--light);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    padding: 1rem 1.25rem;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    padding: 1rem 1.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: rgba(58, 90, 120, 0.05);
+}
+
+.list-group-item a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.list-group-item a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Estilos para los botones */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: var(--primary-dark) !important;
+    color: var(--light);
+}
+
+footer h5 {
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--light);
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--warning);
+    text-decoration: none;
+}

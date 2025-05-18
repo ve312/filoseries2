@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}"
@@ -16,13 +17,13 @@
         </div>
     </div>
 
-    <!-- Mensaje de alerta -->
+    <-- Mensaje de alerta --
     <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
         <span th:text="${mensaje}">Mensaje de éxito</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!-- Tabla de comentarios -->
+    <-- Tabla de comentarios --
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0" th:text="#{mod.comentarios.listado}">Listado de Comentarios</h5>
@@ -94,3 +95,4 @@
 </div>
 </body>
 </html>
+-->

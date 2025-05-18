@@ -1,0 +1,193 @@
+/* Estilos para usuarios.html */
+
+/* Variables globales */
+:root {
+    --primary: #3a5a78;
+    --primary-dark: #2a4158;
+    --secondary: #6c757d;
+    --accent: #9b6a6c;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #2a9d8f;
+    --danger: #e63946;
+    --warning: #e9c46a;
+    --info: #457b9d;
+    --background: #f5f5f5;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: var(--background);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    font-family: 'Open Sans', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--warning) !important;
+}
+
+/* Estilos para la sección de administración */
+.display-4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-dark);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--secondary);
+}
+
+/* Estilos para las alertas */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.alert-success {
+    background-color: rgba(42, 157, 143, 0.15);
+    color: var(--success);
+}
+
+.alert-danger {
+    background-color: rgba(230, 57, 70, 0.15);
+    color: var(--danger);
+}
+
+/* Estilos para el formulario de búsqueda */
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(58, 90, 120, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Estilos para la tabla */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background-color: var(--primary);
+    color: var(--light);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    border: none;
+}
+
+.table td {
+    vertical-align: middle;
+    border-color: #eeeeee;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(58, 90, 120, 0.05);
+}
+
+/* Estilos para los botones de acción */
+.btn-sm {
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    color: var(--light);
+}
+
+.btn-outline-danger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger);
+    color: var(--light);
+}
+
+/* Paginación */
+.pagination {
+    margin-top: 1.5rem;
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.page-link {
+    color: var(--primary);
+}
+
+.page-link:hover {
+    color: var(--primary-dark);
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: var(--primary-dark) !important;
+    color: var(--light);
+}
+
+footer h5 {
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--light);
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--warning);
+    text-decoration: none;
+}

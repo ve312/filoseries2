@@ -14,8 +14,5 @@ public interface AnalisisFilosoficoRepository extends JpaRepository<AnalisisFilo
     List<AnalisisFilosofico> findByEpisodio(Episodio episodio);
     List<AnalisisFilosofico> findByFilosofo(Filosofo filosofo);
     List<AnalisisFilosofico> findByCategoria(CategoriaFilosofica categoria);
-    List<AnalisisFilosofico> findByTituloEsContainingIgnoreCase(String titulo);
-    List<AnalisisFilosofico> findByTituloEnContainingIgnoreCase(String titulo);
-    List<AnalisisFilosofico> findByTituloDeContainingIgnoreCase(String titulo);
     List<AnalisisFilosofico> findTop10ByOrderByFechaPublicacionDesc();
 }

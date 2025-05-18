@@ -13,7 +13,6 @@ public interface EpisodioService {
     Episodio guardar(Episodio episodio);
     void eliminar(Long id);
     List<Episodio> buscarPorSerie(Serie serie);
-    List<Episodio> buscarPorSerieYTemporada(Serie serie, int temporada);
 
     // Métodos para internacionalización
     String getTituloLocalizado(Episodio episodio);

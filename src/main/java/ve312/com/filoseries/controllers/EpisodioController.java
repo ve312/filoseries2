@@ -1,5 +1,9 @@
 package ve312.com.filoseries.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/episodios")
+@Tag(name = "Episodios", description = "Controlador para la gestión y visualización de episodios de series")
 public class EpisodioController {
 
     private final EpisodioService episodioService;
@@ -32,6 +37,12 @@ public class EpisodioController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Ver detalle de un episodio",
+            description = "Muestra la página de detalle de un episodio con su información, análisis filosóficos y navegación entre episodios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Episodio encontrado y mostrado correctamente"),
+            @ApiResponse(responseCode = "302", description = "Episodio no encontrado, redirige a la página de series")
+    })
     public String verDetalleEpisodio(@PathVariable Long id, Model model) {
         Optional<Episodio> episodioOpt = episodioService.buscarPorId(id);
 
@@ -62,6 +73,7 @@ public class EpisodioController {
         }
     }
 
+    // Los métodos auxiliares no necesitan documentación de OpenAPI ya que son privados
     // Métodos auxiliares para preprocesar datos que antes se hacían con streams en las vistas
     private Episodio encontrarEpisodioAnterior(Serie serie, Episodio actual) {
         if (actual.getNumeroEpisodio() <= 1) {

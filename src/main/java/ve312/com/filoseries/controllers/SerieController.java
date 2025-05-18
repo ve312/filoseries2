@@ -1,5 +1,9 @@
 package ve312.com.filoseries.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/series")
+@Tag(name = "Series", description = "Controlador para la gestión y visualización de series")
 public class SerieController {
 
     private final SerieService serieService;
@@ -30,6 +35,11 @@ public class SerieController {
         this.analisisFilosoficoService = analisisFilosoficoService;
     }
     @GetMapping
+    @Operation(summary = "Listar todas las series",
+            description = "Muestra la lista completa de series disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de series mostrada correctamente")
+    })
     public String listarSeries(Model model) {
         model.addAttribute("series", serieService.listarSeries());
         model.addAttribute("serieSer", serieService);
@@ -37,6 +47,12 @@ public class SerieController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Ver detalle de una serie",
+            description = "Muestra la página de detalle de una serie con sus temporadas, episodios y análisis filosóficos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Serie encontrada y mostrada correctamente"),
+            @ApiResponse(responseCode = "302", description = "Serie no encontrada, redirige a la lista de series")
+    })
     public String verDetalleSerie(@PathVariable Long id, Model model) {
         Optional<Serie> optionalSerie = serieService.buscarPorId(id);
 
@@ -68,12 +84,17 @@ public class SerieController {
     }
 
     @GetMapping("/buscar")
+    @Operation(summary = "Buscar series por título",
+            description = "Busca series que contengan el término especificado en su título")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Resultados de búsqueda mostrados correctamente")
+    })
     public String buscarSeries(@RequestParam String termino, Model model) {
         model.addAttribute("series", serieService.buscarPorTitulo(termino));
         model.addAttribute("termino", termino);
         return "series/lista";
     }
-
+    //Los metodos auxilaires no necesitan doc ya que son privados
     // Métodos auxiliares para preprocesar datos que antes se hacían con streams en las vistas
     private List<Integer> extraerTemporadas(List<Episodio> episodios) {
         Set<Integer> temporadasSet = new HashSet<>();

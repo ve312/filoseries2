@@ -1,3 +1,4 @@
+/*
 package ve312.com.filoseries.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,3 +58,4 @@ public class ModeradorController {
         return "redirect:/mod/comentarios";
     }
 }
+ */

@@ -1,44 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(title=#{home.title}, content=~{::content})}"
+      th:replace="~{layout :: html(title=#{home.title}, content=~{::content}, view='lista')}"
 >
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+<!-- <link rel="stylesheet" th:href="@{/css/estilosLista.css}">-->
 </head>
 <body>
 <div th:fragment="content">
     <div class="row mb-4">
         <div class="col">
             <h1 th:text="${termino != null} ? ${#messages.msg('series.search.results', termino)} : #{series.list.title}">Series</h1>
-        </div>
-    </div>
-
-    <!-- Búsqueda avanzada -->
-    <div class="card mb-4">
-        <div class="card-header bg-light">
-            <i class="fas fa-search me-2"></i>
-            <span th:text="#{series.advanced.search}">Búsqueda avanzada</span>
-        </div>
-        <div class="card-body">
-            <form th:action="@{/series/buscar}" method="get" class="row g-3">
-                <div class="col-md-6">
-                    <label for="termino" class="form-label" th:text="#{series.search.title}">Título</label>
-                    <input type="text" class="form-control" id="termino" name="termino" th:value="${termino}">
-                </div>
-                <div class="col-md-3">
-                    <label for="tipo" class="form-label" th:text="#{series.type}">Tipo</label>
-                    <select class="form-select" id="tipo" name="tipo">
-                        <option value="" th:text="#{series.type.all}">Todos</option>
-                        <option value="SERIE" th:text="#{series.type.series}">Serie</option>
-                        <option value="PELICULA" th:text="#{series.type.movie}">Película</option>
-                        <option value="MINISERIE" th:text="#{series.type.miniseries}">Miniserie</option>
-                    </select>
-                </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-100" th:text="#{series.search.button}">Buscar</button>
-                </div>
-            </form>
         </div>
     </div>
 
