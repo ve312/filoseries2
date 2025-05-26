@@ -126,4 +126,5 @@ public class AuthController {
     public String accesoDenegado() {
         return "error/acceso-denegado";
     }
+
 }
