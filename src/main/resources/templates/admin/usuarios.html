@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Administración de Usuarios</title>
-<!--  <link rel="stylesheet" th:href="@{/css/estilosUsuarios.css}">-->
+  <!--  <link rel="stylesheet" th:href="@{/css/estilosUsuarios.css}">-->
 </head>
 <body>
 <div th:fragment="content">
@@ -28,16 +28,24 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
+    <form method="get" action="/admin/usuarios/reporte">
+      <button type="submit" class="btn btn-primary" th:text="#{usuario.reporte}">
+        📄 Generar Reporte de Usuarios
+      </button>
+    </form>
+    <br/>
+
     <!-- Formulario de búsqueda por ID -->
     <div class="row mb-4">
       <div class="col-md-6">
         <form th:action="@{/admin/usuarios}" method="get" class="d-flex">
-          <input type="number" name="buscarId" class="form-control me-2" placeholder="Buscar por ID" aria-label="Buscar por ID">
-          <button class="btn btn-outline-primary" type="submit">Buscar</button>
+          <input type="number" name="buscarId" class="form-control me-2" placeholder="ID" aria-label="Buscar por ID">
+          <button class="btn btn-outline-primary" type="submit" th:text="#{usuario.buscar}">Buscar</button>
         </form>
       </div>
+
       <div class="col-md-6 text-end">
-        <a th:href="@{/admin/usuarios}" class="btn btn-outline-secondary">
+        <a th:href="@{/admin/usuarios}" class="btn btn-outline-secondary" th:text="#{usuario.ver}">
           <i class="bi bi-arrow-repeat"></i> Ver todos
         </a>
       </div>
@@ -48,12 +56,12 @@
       <table class="table table-striped table-hover">
         <thead>
         <tr>
-          <th>ID</th>
-          <th>Usuario</th>
-          <th>Email</th>
-          <th>Roles</th>
-          <th>Estado</th>
-          <th>Acciones</th>
+          <th th:text="#{usuario.id}">ID</th>
+          <th th:text="#{usuario.texto}">Usuario</th>
+          <th th:text="#{usuario.email}" >Email</th>
+          <th th:text="#{usuario.roles}">Roles</th>
+          <th th:text="#{usuario.Estado}">Estado</th>
+          <th th:text="#{usuario.acciones}">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -83,8 +91,7 @@
               </form>
 
               <!-- Botón para eliminar -->
-              <form th:action="@{/admin/usuarios/{id}/eliminar(id=${usuario.id})}" method="post"
-                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.')">
+              <form th:action="@{/admin/usuarios/{id}/eliminar(id=${usuario.id})}" method="post">
                 <button type="submit" class="btn btn-outline-danger" title="Eliminar usuario" th:text="#{boton.eliminar}">
                   <i class="bi bi-trash"></i>
                 </button>

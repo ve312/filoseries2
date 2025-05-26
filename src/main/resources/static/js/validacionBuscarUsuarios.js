@@ -76,3 +76,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Confirmación para eliminar usuarios en la tabla
+document.addEventListener('DOMContentLoaded', function() {
+    // Event delegation para manejar todos los botones de eliminar de la tabla
+    document.addEventListener('click', function(event) {
+        // Verificar si se clickeó en un botón de eliminar o su icono
+        const deleteButton = event.target.closest('form[action*="/eliminar"] button[type="submit"]');
+
+        if (deleteButton) {
+            // Prevenir el envío automático del formulario
+            event.preventDefault();
+
+            // Obtener información del usuario para personalizar el mensaje
+            const row = deleteButton.closest('tr');
+            const username = row.querySelector('td:nth-child(2)').textContent.trim();
+            const userId = row.querySelector('td:nth-child(1)').textContent.trim();
+
+            // Mensaje personalizado con el nombre del usuario
+            const confirmMessage = `¿Estás seguro de que deseas eliminar al usuario "${username}" (ID: ${userId})?\n\nEsta acción no se puede deshacer.`;
+
+            // Mostrar confirmación
+            if (confirm(confirmMessage)) {
+                // Si confirma, enviar el formulario
+                deleteButton.closest('form').submit();
+            }
+        }
+    });
+});

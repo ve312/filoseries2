@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,7 +41,12 @@ public class AuthController {
     })
     public String mostrarFormularioLogin(@RequestParam(value = "error", required = false) String error,
                                          @RequestParam(value = "logout", required = false) String logout,
+                                         Authentication authentication,
                                          Model model) {
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "redirect:/";
+        }
 
         if (error != null) {
             if ("inactive".equals(error)) {
@@ -64,7 +70,11 @@ public class AuthController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Formulario de registro mostrado correctamente")
     })
-    public String mostrarFormularioRegistro(Model model) {
+    public String mostrarFormularioRegistro(Authentication authentication,Model model) {
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "redirect:/";
+        }
         model.addAttribute("usuario", new Usuario());
         return "auth/registro";
     }
