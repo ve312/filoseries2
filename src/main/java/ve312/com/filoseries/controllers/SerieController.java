@@ -83,17 +83,6 @@ public class SerieController {
         }
     }
 
-    @GetMapping("/buscar")
-    @Operation(summary = "Buscar series por título",
-            description = "Busca series que contengan el término especificado en su título")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Resultados de búsqueda mostrados correctamente")
-    })
-    public String buscarSeries(@RequestParam String termino, Model model) {
-        model.addAttribute("series", serieService.buscarPorTitulo(termino));
-        model.addAttribute("termino", termino);
-        return "series/lista";
-    }
     //Los metodos auxilaires no necesitan doc ya que son privados
     // Métodos auxiliares para preprocesar datos que antes se hacían con streams en las vistas
     private List<Integer> extraerTemporadas(List<Episodio> episodios) {

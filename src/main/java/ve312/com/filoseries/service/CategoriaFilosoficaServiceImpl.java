@@ -47,4 +47,13 @@ public class CategoriaFilosoficaServiceImpl implements CategoriaFilosoficaServic
         categoriaRepository.deleteById(id);
     }
 
+    @Override
+    public String getNombreLocalizado(CategoriaFilosofica categoria) {
+        return switch (localizationUtil.getCurrentLanguage()) {
+            case "en" -> categoria.getNombreEn();
+            case "de" -> categoria.getNombreDe();
+            default -> categoria.getNombreEs();
+        };
+    }
+
 }

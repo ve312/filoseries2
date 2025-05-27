@@ -14,22 +14,8 @@ public class MessageUtil {
         this.messageSource = messageSource;
     }
 
-    /**
-     * Obtiene un mensaje localizado por su clave.
-     *
-     * @param key Clave del mensaje en messages.properties
-     * @return Texto localizado
-     */
     public String getMessage(String key) {
         return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
-
-    /**
-     * Obtiene un mensaje localizado por su clave con parámetros.
-     *
-     * @param key Clave del mensaje en messages.properties
-     * @param args Argumentos a insertar en el mensaje
-     * @return Texto localizado con parámetros
-     */
 
 }

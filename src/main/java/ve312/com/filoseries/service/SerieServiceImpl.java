@@ -48,6 +48,8 @@ public class SerieServiceImpl implements SerieService {
         serieRepository.deleteById(id);
     }
 
+    //usando todos los metodos
+
     @Override
     @Transactional(readOnly = true)
     public List<Serie> buscarPorTitulo(String titulo) {
@@ -60,6 +62,8 @@ public class SerieServiceImpl implements SerieService {
             default -> serieRepository.findByTituloEsContainingIgnoreCase(titulo);
         };
     }
+
+    //sintetizando con el metodo creado
 
     @Override
     public String getTituloLocalizado(Serie serie) {

@@ -8,13 +8,14 @@
 </head>
 <body>
 <div th:fragment="content">
-  <!-- Header con imagen destacada -->
+
   <div class="jumbotron bg-dark text-white p-5 mb-4 rounded">
     <div class="container py-5">
       <h1 class="display-4" th:text="#{home.welcome}">Bienvenido a FiloSeries</h1>
       <p class="lead" th:text="#{home.slogan}">Explorando la filosofía a través de tus series favoritas</p>
       <hr class="my-4">
-      <p th:text="#{home.description}">Descubre análisis filosóficos profundos de escenas y personajes que te harán ver tus series desde una nueva perspectiva.</p>
+      <p th:text="#{home.description}">Descubre análisis filosóficos profundos de escenas y personajes que te harán ver
+        tus series desde una nueva perspectiva.</p>
       <a class="btn btn-primary btn-lg" th:href="@{/series}" role="button" th:text="#{home.explore}">Explorar series</a>
     </div>
   </div>
@@ -33,7 +34,8 @@
             </p>
           </div>
           <div class="card-footer bg-transparent border-top-0">
-            <a th:href="@{'/series/' + ${serie.id}}" class="btn btn-sm btn-primary" th:text="#{home.view.details}">Ver detalles</a>
+            <a th:href="@{'/series/' + ${serie.id}}" class="btn btn-sm btn-primary" th:text="#{home.view.details}">Ver
+              detalles</a>
           </div>
         </div>
       </div>
@@ -61,7 +63,8 @@
               Contenido del análisis...
             </p>
             <div class="d-flex justify-content-between align-items-center">
-              <a th:href="@{'/analisis/' + ${analisis.id}}" class="btn btn-sm btn-primary" th:text="#{home.read.more}">Leer más</a>
+              <a th:href="@{'/analisis/' + ${analisis.id}}" class="btn btn-sm btn-primary" th:text="#{home.read.more}">Leer
+                más</a>
               <span class="badge bg-secondary">
                                     <i class="fas fa-comment me-1"></i>
                                     <span th:text="${analisis.comentarios.size()}">0</span>
@@ -71,10 +74,12 @@
           <div class="card-footer bg-transparent">
             <small class="text-muted">
               <span th:text="#{home.episode}">Episodio</span>:
-              <a  class="breadcrumb-ite" th:href="@{'/episodios/' + ${analisis.episodio.id}}" th:text="${episodioSer.getTituloLocalizado(analisis.episodio)}">
+              <a class="breadcrumb-ite" th:href="@{'/episodios/' + ${analisis.episodio.id}}"
+                 th:text="${episodioSer.getTituloLocalizado(analisis.episodio)}">
                 Título del episodio
               </a>
-              (<a class="breadcrumb-ite" th:href="@{'/series/' + ${analisis.episodio.serie.id}}" th:text="${serieSer.getTituloLocalizado(analisis.episodio.serie)}">
+              (<a class="breadcrumb-ite" th:href="@{'/series/' + ${analisis.episodio.serie.id}}"
+                  th:text="${serieSer.getTituloLocalizado(analisis.episodio.serie)}">
               Título de la serie
             </a>)
             </small>
@@ -88,7 +93,8 @@
   <section class="bg-light p-5 rounded mb-5" sec:authorize="!isAuthenticated()">
     <div class="container text-center">
       <h3 th:text="#{home.join.community}">Únete a nuestra comunidad</h3>
-      <p class="lead" th:text="#{home.register.benefits}">Regístrate para comentar en los análisis y participar en discusiones filosóficas</p>
+      <p class="lead" th:text="#{home.register.benefits}">Regístrate para comentar en los análisis y participar en
+        discusiones filosóficas</p>
       <a th:href="@{/registro}" class="btn btn-primary" th:text="#{home.register.now}">Registrarme ahora</a>
     </div>
   </section>

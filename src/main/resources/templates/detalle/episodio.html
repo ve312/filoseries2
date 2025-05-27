@@ -13,10 +13,14 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a th:href="@{/series}" th:text="#{nav.series}">Series</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{'/series/' + ${serie.id}}" th:text="${serieSer.getTituloLocalizado(serie)}">Nombre de la serie</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{'/series/' + ${serie.id}}"
+                                                   th:text="${serieSer.getTituloLocalizado(serie)}">Nombre de la
+                        serie</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.numeroTemporada}">1</span>,
-                        <span th:text="#{series.episode}">Episodio</span> <span th:text="${episodio.numeroEpisodio}">1</span>
+                        <span th:text="#{series.season}">Temporada</span> <span
+                            th:text="${episodio.numeroTemporada}">1</span>,
+                        <span th:text="#{series.episode}">Episodio</span> <span
+                            th:text="${episodio.numeroEpisodio}">1</span>
                     </li>
                 </ol>
             </nav>
@@ -33,8 +37,10 @@
 
             <div class="mb-3">
                 <span class="badge bg-secondary me-2">
-                    <span th:text="#{series.season}">Temporada</span> <span th:text="${episodio.numeroTemporada}">1</span>,
-                    <span th:text="#{series.episode}">Episodio</span> <span th:text="${episodio.numeroEpisodio}">1</span>
+                    <span th:text="#{series.season}">Temporada</span> <span
+                        th:text="${episodio.numeroTemporada}">1</span>,
+                    <span th:text="#{series.episode}">Episodio</span> <span
+                        th:text="${episodio.numeroEpisodio}">1</span>
                 </span>
             </div>
 
@@ -66,7 +72,8 @@
                                 Contenido del análisis...
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a th:href="@{'/analisis/' + ${item.id}}" class="btn btn-sm btn-primary" th:text="#{home.read.more}">Leer más</a>
+                                <a th:href="@{'/analisis/' + ${item.id}}" class="btn btn-sm btn-primary"
+                                   th:text="#{home.read.more}">Leer más</a>
                                 <span class="badge bg-secondary">
                                     <i class="fas fa-comment me-1"></i>
                                     <span th:text="${item.comentarios.size()}">0</span>

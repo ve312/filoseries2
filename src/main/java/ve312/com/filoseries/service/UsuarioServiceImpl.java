@@ -52,23 +52,22 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public Usuario guardar(Usuario usuario) {
-        // Encrypt password
+        // encriptar clave
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         var passwordEnc = encoder.encode(usuario.getPassword());
         usuario.setPassword(passwordEnc);
 
-        // Set registration date
+        // setear fecha de registro
         usuario.setFechaRegistro(LocalDateTime.now());
 
-        // Set default state to ACTIVO
+        // Setear estado ACTIVO por default
         usuario.setEstado("ACTIVO");
 
-        // Ensure USER role is assigned
+        // Verificar que tenga el rol USER asignado
         List<Rol> roles = new ArrayList<>();
         Optional<Rol> userRole = rolService.buscarPorNombre("ROLE_USER");
 
         if (userRole.isEmpty()) {
-            // If ROLE_USER doesn't exist, create it
             Rol newUserRole = new Rol();
             newUserRole.setNombre("ROLE_USER");
             userRole = Optional.of(rolService.guardar(newUserRole));
@@ -98,7 +97,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    //
+
+
+    private boolean tieneRolAdmin(Usuario usuario) {
+        return usuario.getRoles().stream()
+                .anyMatch(rol -> "ROLE_ADMIN".equals(rol.getNombre()));
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -164,10 +168,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
-    private boolean tieneRolAdmin(Usuario usuario) {
-        return usuario.getRoles().stream()
-                .anyMatch(rol -> "ADMIN".equals(rol.getNombre()));
-    }
+
 
 
 }

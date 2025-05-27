@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import ve312.com.filoseries.service.AnalisisFilosoficoService;
 import ve312.com.filoseries.service.CategoriaFilosoficaService;
 import ve312.com.filoseries.service.EpisodioService;
@@ -60,8 +62,11 @@ public class HomeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "302", description = "Redirige a la página principal con el nuevo idioma")
     })
-    public String cambiarIdioma() {
+    public String cambiarIdioma(@RequestParam String lang, @RequestHeader(value = "referer", required = false) String referer) {
         // El cambio de idioma lo maneja Spring automáticamente con LocaleChangeInterceptor
+        if (referer != null) {
+            return "redirect:" + referer;
+        }
         return "redirect:/";
     }
 }

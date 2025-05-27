@@ -27,19 +27,22 @@ public class AnalisisFilosoficoController {
     private final UsuarioService usuarioService;
     private final SerieService serieService;
     private final EpisodioService episodioService;
+    private final CategoriaFilosoficaService categoriaFilosoficaService;
 
     @Autowired
     public AnalisisFilosoficoController(AnalisisFilosoficoService analisisService,
                                         ComentarioService comentarioService,
                                         UsuarioService usuarioService,
                                         SerieService serieService,
-                                        EpisodioService episodioService
+                                        EpisodioService episodioService,
+                                        CategoriaFilosoficaService categoriaFilosoficaService
                                         ) {
         this.analisisService = analisisService;
         this.comentarioService = comentarioService;
         this.usuarioService = usuarioService;
         this.serieService = serieService;
         this.episodioService = episodioService;
+        this.categoriaFilosoficaService = categoriaFilosoficaService;
     }
 
     @GetMapping("/{id}")
@@ -62,6 +65,7 @@ public class AnalisisFilosoficoController {
             model.addAttribute("analisisSer", analisisService);
             model.addAttribute("serieSer", serieService);
             model.addAttribute("episodioSer", episodioService);
+            model.addAttribute("categoriaSer", categoriaFilosoficaService);
 
 
             return "detalle/analisis";

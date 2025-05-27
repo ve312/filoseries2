@@ -7,90 +7,87 @@
 </head>
 <body>
 <div th:fragment="content">
-<section class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="card-title text-center mb-0" th:text="#{registro.titulo}">Registro de Usuario</h2>
-                </div>
+    <section class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="card-title text-center mb-0" th:text="#{registro.titulo}">Registro de Usuario</h2>
+                    </div>
 
-                <div class="card-body">
-                    <form th:action="@{/registro}" th:object="${usuario}" method="post" class="needs-validation" novalidate>
+                    <div class="card-body">
+                        <form th:action="@{/registro}" th:object="${usuario}" method="post" class="needs-validation"
+                              novalidate>
 
-                        <!-- Nombre completo -->
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label" th:text="#{registro.nombre}">Nombre completo</label>
-                            <input type="text" th:classappend="${#fields.hasErrors('nombre')} ? ' is-invalid'"  class="form-control" id="nombre" th:field="*{nombre}" th:placeholder="#{registro.nombre.placeholder}" required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">
-                                Por favor introduce tu nombre completo.
+                            <!-- Nombre completo -->
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label" th:text="#{registro.nombre}">Nombre
+                                    completo</label>
+                                <input type="text" th:classappend="${#fields.hasErrors('nombre')} ? ' is-invalid'"
+                                       class="form-control" id="nombre" th:field="*{nombre}"
+                                       th:placeholder="#{registro.nombre.placeholder}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                     th:errors="*{nombre}">
+                                    Por favor introduce tu nombre completo.
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Username -->
-                        <div class="mb-3">
-                            <label for="username" class="form-label" th:text="#{registro.username}">Nombre de usuario</label>
-                            <input type="text" th:classappend="${#fields.hasErrors('username')} ? ' is-invalid'"  class="form-control" id="username" th:field="*{username}" th:placeholder="#{registro.username.placeholder}" required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-                                Este nombre de usuario ya está en uso.
+                            <!-- Username -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label" th:text="#{registro.username}">Nombre de
+                                    usuario</label>
+                                <input type="text" th:classappend="${#fields.hasErrors('username')} ? ' is-invalid'"
+                                       class="form-control" id="username" th:field="*{username}"
+                                       th:placeholder="#{registro.username.placeholder}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}"
+                                     th:errors="*{username}">
+                                    Este nombre de usuario ya está en uso.
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label" th:text="#{registro.email}">Correo electrónico</label>
-                            <input type="email" th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'"  class="form-control" id="email" th:field="*{email}" th:placeholder="#{registro.email.placeholder}" required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-                                Por favor introduce un correo electrónico válido.
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label" th:text="#{registro.email}">Correo
+                                    electrónico</label>
+                                <input type="email" th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'"
+                                       class="form-control" id="email" th:field="*{email}"
+                                       th:placeholder="#{registro.email.placeholder}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                     th:errors="*{email}">
+                                    Por favor introduce un correo electrónico válido.
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Contraseña -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label" th:text="#{registro.password}">Contraseña</label>
-                            <input type="password" th:classappend="${#fields.hasErrors('password')} ? ' is-invalid'" class="form-control" id="password" th:field="*{password}" th:placeholder="#{registro.password.placeholder}" required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-                                La contraseña debe tener al menos 8 caracteres.
+                            <!-- Contraseña -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label"
+                                       th:text="#{registro.password}">Contraseña</label>
+                                <input type="password" th:classappend="${#fields.hasErrors('password')} ? ' is-invalid'"
+                                       class="form-control" id="password" th:field="*{password}"
+                                       th:placeholder="#{registro.password.placeholder}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                     th:errors="*{password}">
+                                    La contraseña debe tener al menos 8 caracteres.
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Botón de registro -->
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary" th:text="#{registro.boton}">Registrarse</button>
-                        </div>
+                            <!-- Botón de registro -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary" th:text="#{registro.boton}">Registrarse
+                                </button>
+                            </div>
 
-                        <div class="mt-3 text-center">
-                            <p th:text="#{registro.ya.tienes.cuenta}">¿Ya tienes una cuenta?</p>
-                            <a th:href="@{/login}" class="text-decoration-none" th:text="#{registro.iniciar.sesion}">Iniciar sesión</a>
-                        </div>
-                    </form>
+                            <div class="mt-3 text-center">
+                                <p th:text="#{registro.ya.tienes.cuenta}">¿Ya tienes una cuenta?</p>
+                                <a th:href="@{/login}" class="text-decoration-none"
+                                   th:text="#{registro.iniciar.sesion}">Iniciar sesión</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Validación del formulario con Bootstrap
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
-</section>
+    </section>
 </div>
 </body>
 </html>

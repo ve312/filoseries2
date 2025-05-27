@@ -13,4 +13,5 @@ public interface CategoriaFilosoficaService {
     Optional<CategoriaFilosofica> buscarPorId(Long id);
     CategoriaFilosofica guardar(CategoriaFilosofica categoria);
     void eliminar(Long id);
+    String getNombreLocalizado (CategoriaFilosofica categoria);
 }

@@ -61,7 +61,8 @@
                 <span class="badge bg-secondary me-2" th:text="${episodio.numeroEpisodio}">1</span>
                 <span th:text="${episodioSer.getTituloLocalizado(episodio)}">Título del episodio</span>
               </div>
-              <span class="badge bg-secondary me-2" th:if="${!episodio.analisis.isEmpty()}" th:text="${episodio.analisis.size()}">
+              <span class="badge bg-secondary me-2" th:if="${!episodio.analisis.isEmpty()}"
+                    th:text="${episodio.analisis.size()}">
                 <i class="fas fa-book-open"></i>
               </span>
             </a>

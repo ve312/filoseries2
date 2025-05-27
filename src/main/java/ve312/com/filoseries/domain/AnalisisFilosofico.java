@@ -55,12 +55,12 @@ public class AnalisisFilosofico implements Serializable {
 
     @NotNull
     @Column(name = "ana_fecha_publicacion")
-    @Schema(description = "Fecha de publicación del análisis", example = "2025-05-17")
+    @Schema(description = "Fecha de publicación del análisis, no en el sitio sino en general", example = "2025-05-17")
     private LocalDate fechaPublicacion;
 
     @ManyToOne
     @JoinColumn(name = "fil_id")
-    @Schema(description = "Filósofo asociado al análisis")
+    @Schema(description = "Filósofo referenciado en el análisis")
     private Filosofo filosofo;
 
     @ManyToOne
